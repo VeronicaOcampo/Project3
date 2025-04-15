@@ -40,8 +40,8 @@ void mergeSort(vector<int>& array, int left, int right) {
 
 int splitArray(vector<int>& array, int startIndex, int endIndex) {
     int pivot = array[endIndex];
-    int i = startIndex + 1;
-    for(int j = startIndex; i < endIndex; ++j) {
+    int i = startIndex - 1;
+    for(int j = startIndex; j < endIndex; ++j) {
         if(array[j] < pivot) {
             ++i;
             swap(array[i], array[j]);
@@ -57,4 +57,16 @@ void quickSort(vector<int>& array, int startIndex, int endIndex) {
         quickSort(array, startIndex, pivotIndex - 1);
         quickSort(array, pivotIndex + 1, endIndex);
     }
+}
+
+double timer(function<void(vector<int>& array, int, int)> func, vector<int>& array, int startIndex, int endIndex) {
+    auto start = std::chrono::high_resolution_clock::now();
+
+    func(array, startIndex, endIndex);
+
+    auto end = std::chrono::high_resolution_clock::now();
+
+    std::chrono::duration<double, std::milli> duration = end - start;
+
+    return duration.count();
 }
