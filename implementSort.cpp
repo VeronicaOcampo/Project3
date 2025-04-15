@@ -37,3 +37,24 @@ void mergeSort(vector<int>& array, int left, int right) {
     mergeSort(array, mid + 1, right);
     merge(array, left, mid, right);
 }
+
+int splitArray(vector<int>& array, int startIndex, int endIndex) {
+    int pivot = array[endIndex];
+    int i = startIndex + 1;
+    for(int j = startIndex; i < endIndex; ++j) {
+        if(array[j] < pivot) {
+            ++i;
+            swap(array[i], array[j]);
+        }
+    }
+    swap(array[i + 1], array[endIndex]);
+    return i + 1;
+}
+
+void quickSort(vector<int>& array, int startIndex, int endIndex) {
+    if(startIndex < endIndex) {
+        int pivotIndex = splitArray(array, startIndex, endIndex);
+        quickSort(array, startIndex, pivotIndex - 1);
+        quickSort(array, pivotIndex + 1, endIndex);
+    }
+}
