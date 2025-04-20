@@ -4,72 +4,79 @@
 #include <vector>
 #include <string>
 #include <iomanip>
-
+#include <ctime>
 
 void menu() {
     cout << "Sorting Algorithm Comparison\n";
     cout << "----------------------------\n";
-    cout << "1. Merge Sort\n";
-    cout << "2. Quick Sort\n";
-    cout << "3. Compare execution times\n";
+    cout << "1. Compare randomly ordered data\n";
+    cout << "2. Compare ascending ordered data\n";
+    cout << "3. Compare descending ordered data\n";
     cout << "4. Exit\n";
     cout << "Enter your choice: ";
 }
 
+void compareSorting(vector<int>& dataset) {
+    double mergeDuration = 0;
+    double quickDuration = 0;
+
+    vector<int> datasetCopy;
+
+    datasetCopy = dataset;
+    mergeDuration += timer(mergeSort, datasetCopy, 0, datasetCopy.size() - 1);
+    datasetCopy = dataset;
+    quickDuration += timer(quickSort, datasetCopy, 0, datasetCopy.size() - 1);
+
+    // formatting
+    stringstream formattedDuration;
+    formattedDuration << std::fixed << setprecision(5) << mergeDuration;
+
+    cout << "Merge sort took " << formattedDuration.str() << " milliseconds.\n";
+
+    formattedDuration.str("");
+    formattedDuration.clear();
+    formattedDuration << std::fixed << setprecision(5) << quickDuration;
+
+    cout << "Quick sort took " << formattedDuration.str() << " milliseconds.\n";
+
+    string res = (mergeDuration < quickDuration) ? "Merge sort was faster\n" : "Quick sort was faster\n";
+
+    cout << res;
+}
+
+
 int main()
 {
+    // Seed random
+    // srand(static_cast<unsigned int>(time(0)));
 
-    std::string filename = "data.csv";
+    string filename = "data.csv";
+
     int columnIndex = 0; // Read the 1st column (0-based indexing) there are 294021 lines in each column
 
-    std::vector<int> column = readColumnFromCSV(filename, columnIndex);
+    vector<int> column = readColumnFromCSV(filename, columnIndex);
 
     int choice;
     while(true) {
         menu();
         cin >> choice;
+
         if(choice == 1) {
-            mergeSort(column, 0, column.size() - 1);
+            compareSorting(column);
         }
         else if(choice == 2) {
-            quickSort(column, 0, column.size() - 1);
+            vector<int> columnCopy = column;
+            sort(columnCopy.begin(), columnCopy.end());
+            compareSorting(columnCopy);
         }
         else if(choice == 3) {
-            double mergeDuration = 0;
-            double quickDuration = 0;
+            vector<int> columnCopy = column;
+            sort(columnCopy.begin(), columnCopy.end(), std::greater<int>());
+            compareSorting(columnCopy);
 
-            vector<int> datasetCopy;
-
-            // measure the duration 10 times for a more accurate result
-            for(int i = 0; i < 10; i++) {
-                datasetCopy = column;
-                mergeDuration += timer(mergeSort, datasetCopy, 0, datasetCopy.size() - 1);
-                datasetCopy = column;
-                quickDuration += timer(quickSort, datasetCopy, 0, datasetCopy.size() - 1);
-            }
-
-            // take the average of the 10 runs
-            mergeDuration /= 10;
-            quickDuration /= 10;
-
-            // formatting
-            std::stringstream formattedDuration;
-            formattedDuration << std::fixed << setprecision(5) << mergeDuration;
-
-            cout << "Merge sort took " << formattedDuration.str() << " milliseconds.\n";
-
-            formattedDuration.str("");
-            formattedDuration.clear();
-            formattedDuration << std::fixed << setprecision(5) << quickDuration;
-
-            cout << "Quick sort took " << formattedDuration.str() << " milliseconds.\n";
-
-            string res = (mergeDuration < quickDuration) ? "Merge sort was faster\n" : "Quick sort was faster\n";
-
-
-            cout << res;
         }
         else if(choice == 4) {
+            cout << "Thank you for using the Sorting Algorithm Comparison program.\n";
             return 0;
         }
         else {

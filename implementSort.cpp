@@ -1,6 +1,7 @@
 #include "sorting.h"
 #include <fstream>
 #include <sstream>
+#include <iostream>
 
 void merge(vector<int>& array, int left, int mid, int right) {
     int leftHalf = mid - left + 1;
@@ -33,12 +34,22 @@ void merge(vector<int>& array, int left, int mid, int right) {
 }
 
 void mergeSort(vector<int>& array, int left, int right) {
+
     if(left >= right) return;
     int mid = left + (right - left) / 2;
     mergeSort(array, left, mid);
     mergeSort(array, mid + 1, right);
     merge(array, left, mid, right);
 }
+
+/* I don't know if we want to use randomized partitions or not (it sorts already-sorted data much quicker), here
+ * it is just in case
+ */
+// int randomizedPartition(vector<int>& array, int startIndex, int endIndex) {
+//     int randomIndex = startIndex + rand() % (endIndex - startIndex + 1);
+//     std::swap(array[randomIndex], array[endIndex]);
+//     return splitArray(array, startIndex, endIndex);
+// }
 
 int splitArray(vector<int>& array, int startIndex, int endIndex) {
     int pivot = array[endIndex];
@@ -53,8 +64,10 @@ int splitArray(vector<int>& array, int startIndex, int endIndex) {
     return i + 1;
 }
 
+
 void quickSort(vector<int>& array, int startIndex, int endIndex) {
     if(startIndex < endIndex) {
+        //int pivotIndex = randomizedPartition(array, startIndex, endIndex);
         int pivotIndex = splitArray(array, startIndex, endIndex);
         quickSort(array, startIndex, pivotIndex - 1);
         quickSort(array, pivotIndex + 1, endIndex);
