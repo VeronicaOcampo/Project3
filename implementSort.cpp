@@ -1,4 +1,6 @@
 #include "sorting.h"
+#include <fstream>
+#include <sstream>
 
 void merge(vector<int>& array, int left, int mid, int right) {
     int leftHalf = mid - left + 1;
@@ -69,4 +71,29 @@ double timer(function<void(vector<int>& array, int, int)> func, vector<int>& arr
     std::chrono::duration<double, std::milli> duration = end - start;
 
     return duration.count();
+}
+
+std::vector<int> readColumnFromCSV(const std::string& filename, int columnIndex) {
+    std::vector<int> columnData;
+    std::ifstream file(filename);
+    std::string line;
+
+    // Skip header
+    std::getline(file, line);
+
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+        std::string cell;
+        int currentIndex = 0;
+
+        while (std::getline(ss, cell, ',')) {
+            if (currentIndex == columnIndex) {
+                columnData.push_back(std::stoi(cell));
+                break;
+            }
+            currentIndex++;
+        }
+    }
+
+    return columnData;
 }

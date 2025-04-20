@@ -2,6 +2,7 @@
 #include <vector>
 #include <chrono>
 #include <functional>
+#include <string>
 
 using namespace std;
 
@@ -12,5 +13,7 @@ int splitArray(vector<int>& array, int startIndex, int endIndex);
 void quickSort(vector<int>& array, int startIndex, int endIndex);
 
 double timer(function<void(vector<int>&, int, int)> func, vector<int>& array, int startIndex, int endIndex);
+
+vector<int> readColumnFromCSV(const std::string& filename, int columnIndex);
 
 
