@@ -5,6 +5,8 @@
 #include <string>
 #include <iomanip>
 #include <ctime>
+#include <future>
+#include <thread>
 
 void menu() {
     cout << "Sorting Algorithm Comparison\n";
@@ -19,13 +21,19 @@ void menu() {
 void compareSorting(vector<int>& dataset) {
     double mergeDuration = 0;
     double quickDuration = 0;
+    double randomQuickDuration = 0;
 
-    vector<int> datasetCopy;
 
-    datasetCopy = dataset;
-    mergeDuration += timer(mergeSort, datasetCopy, 0, datasetCopy.size() - 1);
-    datasetCopy = dataset;
-    quickDuration += timer(quickSort, datasetCopy, 0, datasetCopy.size() - 1);
+    vector<int> mergeCopy = dataset;
+    vector<int> quickCopy = dataset;
+    vector<int> randomQuickCopy = dataset;
+
+
+    mergeDuration = timer(mergeSort, mergeCopy, 0, mergeCopy.size() - 1);
+    randomQuickDuration = timer(randomizedQuickSort, randomQuickCopy, 0, randomQuickCopy.size() - 1);
+    //FIX: PROGRAM HANGS ON THE FOLLOWING LINE WHEN PROCESSING SORTED LISTS
+    quickDuration = timer(quickSort, quickCopy, 0, quickCopy.size() - 1);
+
 
     // formatting
     stringstream formattedDuration;
@@ -33,22 +41,36 @@ void compareSorting(vector<int>& dataset) {
 
     cout << "Merge sort took " << formattedDuration.str() << " milliseconds.\n";
 
+    if(quickDuration == -1.0) {
+        cout << "Quick sort (pivot = last element in subarray) took 3 or more seconds to execute.\n";
+    } else{
+        formattedDuration.str("");
+        formattedDuration << std::fixed << setprecision(5) << quickDuration;
+        cout << "Quick sort (pivot = last element in subarray) took " << formattedDuration.str() << " milliseconds.\n";
+    }
+
     formattedDuration.str("");
-    formattedDuration.clear();
-    formattedDuration << std::fixed << setprecision(5) << quickDuration;
+    formattedDuration << std::fixed << setprecision(5) << randomQuickDuration;
 
-    cout << "Quick sort took " << formattedDuration.str() << " milliseconds.\n";
+    cout << "Quick sort (pivot = randomized) took " << formattedDuration.str() << " milliseconds.\n";
 
-    string res = (mergeDuration < quickDuration) ? "Merge sort was faster\n" : "Quick sort was faster\n";
 
-    cout << res;
+    double min = std::min({mergeDuration, quickDuration, randomQuickDuration});
+    if(min == mergeDuration) {
+        cout << "Merge sort was faster\n";
+    }
+    if(min == quickDuration) {
+        cout << "Quick sort with last element pivot was faster\n";
+    }
+    if(min == randomQuickDuration) {
+        cout << "Quick sort with randomized pivot was faster\n";
+    }
 }
 
 
 int main()
 {
-    // Seed random
-    // srand(static_cast<unsigned int>(time(0)));
+    srand(static_cast<unsigned int>(time(0)));
 
     string filename = "data.csv";
 

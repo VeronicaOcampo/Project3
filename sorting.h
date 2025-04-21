@@ -12,6 +12,9 @@ void mergeSort(vector<int>& array, int left, int right);
 int splitArray(vector<int>& array, int startIndex, int endIndex);
 void quickSort(vector<int>& array, int startIndex, int endIndex);
 
+int randomizedPartition(vector<int>& array, int startIndex, int endIndex);
+void randomizedQuickSort(vector<int>& array, int startIndex, int endIndex);
+
 double timer(function<void(vector<int>&, int, int)> func, vector<int>& array, int startIndex, int endIndex);
 
 vector<int> readColumnFromCSV(const std::string& filename, int columnIndex);
