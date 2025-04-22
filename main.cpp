@@ -66,7 +66,7 @@ int main()
 
     string filename = "data.csv";
 
-    int columnIndex = 0; // Read the 1st column (0-based indexing) there are 294021 lines in each column
+    int columnIndex = 1; // Read the 1st column (0-based indexing) there are 294021 lines in each column
 
     vector<int> column = readColumnFromCSV(filename, columnIndex);
 
