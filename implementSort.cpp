@@ -1,8 +1,5 @@
     #include "sorting.h"
-    #include <fstream>
-    #include <sstream>
-    #include <iostream>
-    #include <future>
+
     void merge(vector<int>& array, int left, int mid, int right) {
         int leftHalf = mid - left + 1;
         int rightHalf = right - mid;
