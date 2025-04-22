@@ -1,12 +1,4 @@
-#include <iostream>
 #include "sorting.h"
-#include <sstream>
-#include <vector>
-#include <string>
-#include <iomanip>
-#include <ctime>
-#include <future>
-#include <thread>
 
 void menu() {
     cout << "Sorting Algorithm Comparison\n";
