@@ -1,8 +1,17 @@
 #pragma once
+#include <iostream>
 #include <vector>
 #include <chrono>
 #include <functional>
 #include <string>
+#include <sstream>
+#include <vector>
+#include <string>
+#include <iomanip>
+#include <ctime>
+#include <future>
+#include <thread>
+#include <algorithm>
 
 using namespace std;
 
