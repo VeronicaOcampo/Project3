@@ -22,8 +22,7 @@ void compareSorting(vector<int>& dataset) {
 
 
     mergeDuration = timer(mergeSort, mergeCopy, 0, mergeCopy.size() - 1);
-    randomQuickDuration = timer(randomizedQuickSort, randomQuickCopy, 0, randomQuickCopy.size() - 1);
-    //FIX: PROGRAM HANGS ON THE FOLLOWING LINE WHEN PROCESSING SORTED LISTS
+    randomQuickDuration = timer(randomizedQuickSort, randomQuickCopy, 0, randomQuickCopy.size() - 1)
     quickDuration = timer(quickSort, quickCopy, 0, quickCopy.size() - 1);
 
 
@@ -66,7 +65,7 @@ int main()
 
     string filename = "data.csv";
 
-    int columnIndex = 0; // Read the 1st column (0-based indexing) there are 294021 lines in each column
+    int columnIndex = 1; // Read the 1st column (0-based indexing) there are 294021 lines in each column
 
     vector<int> column = readColumnFromCSV(filename, columnIndex);
 
