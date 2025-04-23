@@ -15,7 +15,6 @@ To run the project you need:
 - CMake (if building via CLion or the terminal)
 - C++17 support (used by team, recommended)
 - IDE, i.e. CLion (used by team)
-- The file should contain numeric price data in the second column.
 - Make sure to remove any headers or make sure the program skips it
 
   **Ensure that all the following files are in the same directory:**
@@ -23,3 +22,4 @@ To run the project you need:
 - implementSort.cpp
 - sorting.h
 - data.csv
+   - The file should contain numeric price data in the second column.
